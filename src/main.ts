@@ -1,5 +1,6 @@
 import { Plugin, Notice } from 'obsidian';
 import path from 'node:path';
+import { promises as fs } from 'node:fs';
 import { mergeSettings, DEFAULT_SETTINGS, type PluginSettings } from './settings/settings';
 import { GitSyncSettingsTab } from './settings/settingsTab';
 import { RealGitRunner } from './git/RealGitRunner';
@@ -58,9 +59,8 @@ export default class GitSyncPlugin extends Plugin {
 
     // First-run gate: auto-triggers stay paused until the user runs one manual sync.
     const flagPath = path.join(vaultPath, '.obsidian', 'plugins', this.manifest.id, '.confirmed');
-    const fsm = await import('node:fs');
     let confirmed = true;
-    try { await fsm.promises.access(flagPath); } catch { confirmed = false; }
+    try { await fs.access(flagPath); } catch { confirmed = false; }
 
     this.engine = new SyncEngine({
       guard: this.guard,
@@ -76,8 +76,8 @@ export default class GitSyncPlugin extends Plugin {
           infoNotice('Sync complete.');
           if (!confirmed) {
             confirmed = true;
-            await fsm.promises.mkdir(path.dirname(flagPath), { recursive: true });
-            await fsm.promises.writeFile(flagPath, new Date().toISOString());
+            await fs.mkdir(path.dirname(flagPath), { recursive: true });
+            await fs.writeFile(flagPath, new Date().toISOString());
             this.triggers.resumeAutoTriggers();
             infoNotice('Auto-triggers enabled.');
           }
