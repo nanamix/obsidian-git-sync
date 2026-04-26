@@ -34,18 +34,16 @@ function statusText(s: SyncStatus): string {
 }
 
 export function attachStatusBar(el: HTMLElement, state: SyncState, onClick: () => void): StatusBarApi {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const obs = el as any; // Obsidian augments HTMLElement at runtime; cast needed when types map to mock
-  obs.addClass('git-sync-status-bar');
+  el.addClass('git-sync-status-bar');
   const update = (s: SyncStatus) => {
-    obs.setText(statusText(s));
-    obs.removeClass('git-sync-status-bar--error');
-    obs.removeClass('git-sync-status-bar--conflict');
-    if (s.phase === 'error') obs.addClass('git-sync-status-bar--error');
-    if (s.phase === 'conflict') obs.addClass('git-sync-status-bar--conflict');
+    el.setText(statusText(s));
+    el.removeClass('git-sync-status-bar--error');
+    el.removeClass('git-sync-status-bar--conflict');
+    if (s.phase === 'error') el.addClass('git-sync-status-bar--error');
+    if (s.phase === 'conflict') el.addClass('git-sync-status-bar--conflict');
   };
   const unsub = state.subscribe(update);
-  obs.onClickEvent(onClick);
+  el.onClickEvent(onClick);
   // Periodic refresh for relative time
   const refresh = window.setInterval(() => update(state.get()), 30_000);
   return {

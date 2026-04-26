@@ -14,10 +14,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "lib": ["DOM", "ES2022"],
-    "types": ["node", "vitest/globals"],
-    "paths": {
-      "obsidian": ["tests/mocks/obsidian.ts"]
-    }
+    "types": ["node", "vitest/globals"]
   },
   "include": ["src/**/*.ts", "tests/**/*.ts"]
 }
