@@ -1,0 +1,11 @@
+/* Obsidian Git Sync — styles */
+.git-sync-status-bar {
+  cursor: pointer;
+}
+.git-sync-status-bar--error {
+  color: var(--text-error);
+}
+.git-sync-status-bar--conflict {
+  color: var(--text-error);
+  font-weight: bold;
+}

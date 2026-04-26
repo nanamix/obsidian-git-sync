@@ -1,0 +1,30 @@
+{
+  "name": "obsidian-git-sync",
+  "version": "0.1.0",
+  "description": "Sync your vault to a Git remote with configurable triggers and conflict handling.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src tests --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\""
+  },
+  "keywords": ["obsidian", "git", "sync"],
+  "author": "Hajin Yoo",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "builtin-modules": "^4.0.0",
+    "esbuild": "^0.20.0",
+    "eslint": "^8.57.0",
+    "obsidian": "latest",
+    "prettier": "^3.2.0",
+    "tslib": "^2.6.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.4.0"
+  }
+}
