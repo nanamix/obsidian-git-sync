@@ -1,6 +1,5 @@
 import { Plugin, Notice } from 'obsidian';
 import path from 'node:path';
-import os from 'node:os';
 import { mergeSettings, DEFAULT_SETTINGS, type PluginSettings } from './settings/settings';
 import { GitSyncSettingsTab } from './settings/settingsTab';
 import { RealGitRunner } from './git/RealGitRunner';
