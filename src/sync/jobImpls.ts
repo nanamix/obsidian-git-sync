@@ -53,7 +53,7 @@ async function runFullSync(deps: JobDeps, trigger: TriggerKind): Promise<JobOutc
 
   // Push (with one-shot retry on non-fast-forward)
   deps.state.setPhase('pushing');
-  const pushed = await pushWithRetry(deps, trigger);
+  const pushed = await pushWithRetry(deps);
   return finalize(deps, trigger, pushed);
 }
 
@@ -75,7 +75,7 @@ async function runPushOnly(deps: JobDeps, trigger: TriggerKind): Promise<JobOutc
   const pre = await preFlightOrFail(deps);
   if (pre) return pre;
   deps.state.setPhase('pushing');
-  return finalize(deps, trigger, await pushWithRetry(deps, trigger));
+  return finalize(deps, trigger, await pushWithRetry(deps));
 }
 
 async function runResolveConflicts(deps: JobDeps, trigger: TriggerKind): Promise<JobOutcome> {
@@ -199,7 +199,7 @@ async function commitIfDirty(deps: JobDeps, trigger: TriggerKind): Promise<JobOu
   return { errorKind: ErrorKind.Ok, message: '' };
 }
 
-async function pushWithRetry(deps: JobDeps, trigger: TriggerKind): Promise<JobOutcome> {
+async function pushWithRetry(deps: JobDeps): Promise<JobOutcome> {
   const { remote, branch } = deps.settings.repo;
   const first = await deps.git.run(['push', remote, branch]);
   if (first.exitCode === 0) return { errorKind: ErrorKind.Ok, message: '' };
