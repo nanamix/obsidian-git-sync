@@ -17,7 +17,12 @@ export class RealGitRunner implements GitRunner {
       const start = Date.now();
       const child = spawn('git', args as string[], {
         cwd: this.opts.cwd,
-        env: process.env,
+        // Force editor-less behaviour. Some git commands (rebase --continue,
+        // commit without -m, merge --no-ff with default message) try to spawn
+        // an editor; on headless / CI environments without one configured,
+        // they hang or fail. ":" is the POSIX no-op shell builtin, so it
+        // returns 0 immediately and git proceeds with the default message.
+        env: { ...process.env, GIT_EDITOR: ':', GIT_SEQUENCE_EDITOR: ':' },
       });
       let stdout = '';
       let stderr = '';

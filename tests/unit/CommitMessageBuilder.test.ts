@@ -40,7 +40,10 @@ describe('buildCommitMessage', () => {
     );
     expect(msg).toContain('iMacmini');
     expect(msg).toContain('2026-04-26');
-    expect(msg).toMatch(/2026-04-26T15:42:00[+-]\d{2}:\d{2}/);
+    // The Date is built from a timezone-fixed ISO string (KST +09:00), but
+    // isoDateTimeWithTz formats in the *runner's* local timezone — so the
+    // hour/minute and offset depend on TZ. Pin only the date and shape.
+    expect(msg).toMatch(/2026-04-2[56]T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}/);
     expect(msg).toContain('3 modified, 1 added');
     expect(msg).toContain('manual');
     expect(msg).toContain('main');
