@@ -79,9 +79,9 @@ async function runPushOnly(deps: JobDeps, trigger: TriggerKind): Promise<JobOutc
 }
 
 async function runResolveConflicts(deps: JobDeps, trigger: TriggerKind): Promise<JobOutcome> {
-  // 1. Verify no markers remain
-  const status = await deps.git.run(['status', '--porcelain', '-z']);
-  if (/(?:^| )(UU|AA|DD|U[ADM]|[ADM]U) /.test(status.stdout)) {
+  // 1. Verify no conflict markers remain in file content (checked before staging)
+  const markerCheck = await deps.git.run(['grep', '-l', '^<<<<<<<', '--', '.']);
+  if (markerCheck.exitCode === 0 && markerCheck.stdout.trim().length > 0) {
     return finalize(deps, trigger, {
       errorKind: ErrorKind.Conflict,
       message: 'Unresolved conflict markers still present. Remove all `<<<<<<<` markers first.',
