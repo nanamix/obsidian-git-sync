@@ -1,6 +1,6 @@
 import { App, PluginSettingTab, Setting, type Plugin } from 'obsidian';
 import os from 'node:os';
-import type { PluginSettings } from './settings';
+import { type PluginSettings, PRESETS, applyPreset } from './settings';
 import { buildCommitMessage } from '../commit/CommitMessageBuilder';
 
 export interface SettingsTabHost {
@@ -23,6 +23,22 @@ export class GitSyncSettingsTab extends PluginSettingTab {
       await this.host.saveSettings(next);
       this.display();
     };
+
+    containerEl.createEl('h2', { text: 'Presets' });
+    containerEl.createEl('p', {
+      text: 'Quick-start configurations. Pick one or fine-tune below. Repository (branch / remote) is preserved.',
+    });
+    for (const [key, preset] of Object.entries(PRESETS)) {
+      new Setting(containerEl)
+        .setName(preset.label)
+        .setDesc(preset.description)
+        .addButton((b) =>
+          b.setButtonText('Apply').onClick(async () => {
+            await this.host.saveSettings(applyPreset(s, key as keyof typeof PRESETS));
+            this.display();
+          }),
+        );
+    }
 
     containerEl.createEl('h2', { text: 'Repository' });
     new Setting(containerEl)
