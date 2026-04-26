@@ -1,6 +1,6 @@
 {
   "name": "obsidian-git-sync",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sync your vault to a Git remote with configurable triggers and conflict handling.",
   "main": "main.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\""
   },
   "keywords": ["obsidian", "git", "sync"],
-  "author": "Hajin Yoo",
+  "author": "JinYoung Ha",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.11.0",

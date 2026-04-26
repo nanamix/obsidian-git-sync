@@ -1,7 +1,7 @@
 # Obsidian Git Sync — Design Spec
 
 - **Date**: 2026-04-26
-- **Author**: Hajin Yoo (jyha@medicnc.co.kr)
+- **Author**: JinYoung Ha (jyha@medicnc.co.kr)
 - **Status**: Draft, awaiting user review
 - **Replaces**: `github-sync` plugin by Kevin Chin (v1.0.6) currently in use at `~/Dev/medi-jyha-note/.obsidian/plugins/github-sync/`
 
@@ -303,7 +303,7 @@ obsidian-git-sync/
   "version": "0.1.0",
   "minAppVersion": "1.5.0",
   "description": "Sync your vault to a Git remote with configurable triggers and conflict handling.",
-  "author": "Hajin Yoo",
+  "author": "JinYoung Ha",
   "authorUrl": "https://github.com/jyha81",
   "isDesktopOnly": true
 }
